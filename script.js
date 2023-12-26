@@ -1,7 +1,11 @@
-// Function to update the download button state
-function updateDownloadButtonState() {
+// Function to update the download button visibility and state
+function updateDownloadButtonVisibilityAndState() {
     const downloadBtn = document.getElementById('download-btn');
-    downloadBtn.disabled = !textAreaHasContent();
+    const hasContent = textAreaHasContent();
+    const isFocused = (document.activeElement === document.getElementById('writing-area'));
+    
+    downloadBtn.style.visibility = hasContent || isFocused ? 'visible' : 'hidden';
+    downloadBtn.disabled = !hasContent;
 }
 
 // Function to check if the text area has non-space characters
@@ -10,13 +14,13 @@ function textAreaHasContent() {
 }
 
 // Event listener for text area to handle enabling of the download button
-document.getElementById('writing-area').addEventListener('input', updateDownloadButtonState);
+document.getElementById('writing-area').addEventListener('input', updateDownloadButtonVisibilityAndState);
 
 // Event listener to show the disabled download button when the textarea is clicked
-document.getElementById('writing-area').addEventListener('click', function() {
-    document.getElementById('download-btn').style.visibility = 'visible';
-    updateDownloadButtonState();
-});
+document.getElementById('writing-area').addEventListener('focus', updateDownloadButtonVisibilityAndState);
+
+// Event listener for when the text area loses focus
+document.getElementById('writing-area').addEventListener('blur', updateDownloadButtonVisibilityAndState);
 
 // Event listener for the download button
 document.getElementById('download-btn').addEventListener('click', function() {
@@ -36,6 +40,6 @@ document.getElementById('download-btn').addEventListener('click', function() {
 document.getElementById('new-btn').addEventListener('click', function() {
     if(confirm('Are you sure you want to clear the text?')) {
         document.getElementById('writing-area').value = '';
-        document.getElementById('download-btn').style.visibility = 'hidden';
+        updateDownloadButtonVisibilityAndState();
     }
 });
