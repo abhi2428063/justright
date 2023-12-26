@@ -7,19 +7,33 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="container">
+    <div class="app-container">
         <header>
             <h1>Just Right</h1>
             <h2>Distraction-free Writing</h2>
         </header>
-        <main>
-            <textarea id="writing-area" placeholder="Start writing here..."></textarea>
-        </main>
+        <div class="main-content">
+            <div class="text-area-container">
+                <textarea id="writing-area" placeholder="Start writing here..."></textarea>
+                <button id="download-btn" class="action-btn">Download</button> <!-- Download button -->
+            </div>
+            <div class="sidebar">
+                <button id="write-btn" class="action-btn">Write</button>
+                <button id="new-btn" class="action-btn">New</button>
+                <button id="menu-btn" class="action-btn">Menu</button>
+                <a href="https://abhi.bearblog.dev/" target="_blank" class="contribute-btn action-btn">Contribute</a>
+            </div>
+        </div>
         <footer>
-            <button id="write-btn">Write</button>
-            <button id="new-btn">New</button>
-            <button id="menu-btn">Menu</button>
-            <a href="https://abhi.bearblog.dev/" target="_blank" id="contribute-btn">Contribute</a>
+            <p>Hey, there! We don't save drafts. Be responsible.</p>
+            <ul>
+                <li>Turn off all notifications. Keep all other devices away.</li>
+                <li>Disconnect the internet if needed. This will still work!</li>
+                <li>Take a few deep breaths. Bring your focus on this page.</li>
+                <li>Hit the WRITE button on top.</li>
+                <li>Go full screen.</li>
+                <li>Write. Write. Write.</li>
+            </ul>
         </footer>
     </div>
     <script src="script.js"></script>
