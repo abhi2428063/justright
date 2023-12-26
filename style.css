@@ -102,3 +102,6 @@ footer ul li {
 .write-mode textarea {
     height: 90vh; /* Make the textarea take up more screen space */
 }
+#download-btn {
+    visibility: hidden; /* Hidden by default and will be made visible by JavaScript */
+}

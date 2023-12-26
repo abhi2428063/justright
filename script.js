@@ -1,33 +1,38 @@
-// Script to handle the "Write" mode toggle
-let writeMode = false;
+// Initially hide the download button
+document.getElementById('download-btn').style.visibility = 'hidden';
 
-document.getElementById('write-btn').addEventListener('click', function() {
-    writeMode = !writeMode; // Toggle the state of write mode
-    document.body.classList.toggle('write-mode', writeMode);
-    // Hide or show elements based on the write mode state
-    document.getElementById('new-btn').style.display = writeMode ? 'none' : 'inline-block';
-    document.getElementById('menu-btn').style.display = writeMode ? 'none' : 'inline-block';
-    document.querySelector('.contribute-btn').style.display = writeMode ? 'none' : 'inline-block';
+// Function to check if the text area has non-space characters
+function textAreaHasContent() {
+    return document.getElementById('writing-area').value.trim().length > 0;
+}
+
+// Event listener for text area to handle the appearance of the download button
+document.getElementById('writing-area').addEventListener('input', function() {
+    // Show or hide the download button based on text area content
+    document.getElementById('download-btn').style.visibility = textAreaHasContent() ? 'visible' : 'hidden';
 });
 
-document.getElementById('new-btn').addEventListener('click', function() {
-    if(confirm('Are you sure you want to clear the text?')) {
-        document.getElementById('writing-area').value = '';
+// Event listener for the download button
+document.getElementById('download-btn').addEventListener('click', function() {
+    if (textAreaHasContent()) {
+        const text = document.getElementById('writing-area').value;
+        const blob = new Blob([text], { type: 'text/plain' });
+        const anchor = document.createElement('a');
+        anchor.download = "JustRight.txt"; // Name of the downloaded file
+        anchor.href = window.URL.createObjectURL(blob);
+        anchor.target = "_blank";
+        anchor.style.display = "none"; // Hide anchor element
+        document.body.appendChild(anchor);
+        anchor.click(); // Simulate click on the anchor to trigger download
+        document.body.removeChild(anchor);
     }
 });
 
-document.getElementById('download-btn').addEventListener('click', function() {
-    const text = document.getElementById('writing-area').value;
-    const blob = new Blob([text], { type: 'text/plain' });
-    const anchor = document.createElement('a');
-    anchor.download = "myText.txt";
-    anchor.href = window.URL.createObjectURL(blob);
-    anchor.target = "_blank";
-    anchor.style.display = "none";
-    document.body.appendChild(anchor);
-    anchor.click();
-    document.body.removeChild(anchor);
+// Event listener for the new button
+document.getElementById('new-btn').addEventListener('click', function() {
+    if(confirm('Are you sure you want to clear the text?')) {
+        document.getElementById('writing-area').value = '';
+        // Hide the download button again
+        document.getElementById('download-btn').style.visibility = 'hidden';
+    }
 });
-
-// Add the 'download-btn' to the HTML, assuming it is inside the 'text-area-container' div
-// <button id="download-btn">Download</button>
